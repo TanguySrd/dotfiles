@@ -23,11 +23,12 @@ setopt hist_expire_dups_first
 setopt hist_ignore_dups
 setopt hist_verify
 
+# Eza = better ls
+alias ls="eza --icons=always"
+alias config='/usr/bin/git --git-dir=/Users/tanguyserrand/.cfg/ --work-tree=/Users/tanguyserrand'
+
 bindkey "^[[A" history-search-backward
 bindkey "^[[B" history-search-forward
 source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-# Eza = better ls
-alias ls="eza --icons=always"
-alias config='/usr/bin/git --git-dir=/Users/tanguyserrand/.cfg/ --work-tree=/Users/tanguyserrand'
