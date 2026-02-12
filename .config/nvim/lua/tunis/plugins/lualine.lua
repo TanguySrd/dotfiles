@@ -49,7 +49,7 @@ return {
       },
     }
 
-    -- configure lualine with modified theme
+
     lualine.setup({
       options = {
         theme = my_lualine_theme,
