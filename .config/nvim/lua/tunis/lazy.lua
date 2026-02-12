@@ -11,7 +11,7 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-require("lazy").setup("tunis.plugins", {
+require("lazy").setup({ { import = "tunis.plugins" }, { import = "tunis.plugins.lsp" } }, {
   checker = {
     enabled = true,
     notify = false,
