@@ -4,19 +4,19 @@ return {
         opts = {
             -- list of servers for mason to install
             ensure_installed = {
-                "ts_ls",
-                "html",
                 "cssls",
-                "tailwindcss",
-                "svelte",
-                "lua_ls",
-                "graphql",
                 "emmet_ls",
+                "eslint",
+                "graphql",
+                "html",
+                "jdtls",
+                "lua_ls",
                 "prismals",
                 "pyright",
-                "eslint",
-                "jdtls",
                 "sqlls",
+                "svelte",
+                "tailwindcss",
+                "ts_ls",
             },
         },
         dependencies = {
@@ -39,15 +39,15 @@ return {
         "WhoIsSethDaniel/mason-tool-installer.nvim",
         opts = {
             ensure_installed = {
-                "prettier", -- prettier formatter
-                "stylua", -- lua formatter
-                "isort", -- python formatter
                 "black", -- python formatter
-                "pylint",
+                "checkstyle",
                 "eslint_d",
                 "google-java-format",
+                "isort", -- python formatter
+                "prettier", -- prettier formatter
+                "pylint",
                 "sql-formatter",
-                "checkstyle",
+                "stylua", -- lua formatter
             },
         },
         dependencies = {
