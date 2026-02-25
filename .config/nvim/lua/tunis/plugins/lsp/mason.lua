@@ -9,7 +9,6 @@ return {
                 "eslint",
                 "graphql",
                 "html",
-                "jdtls",
                 "lua_ls",
                 "prismals",
                 "pyright",
@@ -40,9 +39,7 @@ return {
         opts = {
             ensure_installed = {
                 "black", -- python formatter
-                "checkstyle",
                 "eslint_d",
-                "google-java-format",
                 "isort", -- python formatter
                 "prettier", -- prettier formatter
                 "pylint",

@@ -23,4 +23,13 @@ config.window_decorations = "RESIZE"
 config.window_background_opacity = 0.7
 config.macos_window_background_blur = 10
 
+config.window_padding = {
+	left = 0,
+	right = 0,
+	top = 2,
+	bottom = 0,
+}
+
+config.use_resize_increments = true
+
 return config
