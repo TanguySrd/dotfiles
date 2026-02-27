@@ -20,7 +20,6 @@ return {
                 liquid = { "prettier" },
                 lua = { "stylua" },
                 python = { "isort", "black" },
-                java = { "google-java-format" },
                 sql = { "sql-formatter" },
             },
             format_on_save = {

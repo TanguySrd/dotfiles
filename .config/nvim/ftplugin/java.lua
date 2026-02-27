@@ -122,7 +122,6 @@ local config = {
     capabilities = capabilities,
     on_attach = function()
         require("jdtls").setup_dap({ hotcodereplace = "auto" })
-        require("jdtls.setup").add_commands()
         require("jdtls.dap").setup_dap_main_class_configs()
     end,
     cmd = {
@@ -136,8 +135,6 @@ local config = {
     root_dir = require("jdtls.setup").find_root({
         "pom.xml",
         "build.gradle",
-        "mvnw",
-        "gradlew",
         ".git",
     }),
     settings = {
