@@ -5,6 +5,10 @@ return {
     local lualine = require("lualine")
     local lazy_status = require("lazy.status") -- to configure lazy pending updates count
 
+    local ayu = true
+    local ayuColors = require("ayu.colors")
+    ayuColors.generate(true)
+
     local colors = {
       blue = "#65D1FF",
       green = "#3EFFDC",
@@ -49,17 +53,16 @@ return {
       },
     }
 
-
     lualine.setup({
       options = {
-        theme = my_lualine_theme,
+        theme = ayu and "ayu" or my_lualine_theme,
       },
       sections = {
         lualine_x = {
           {
             lazy_status.updates,
             cond = lazy_status.has_updates,
-            color = { fg = "#ff9e64" },
+            color = { fg = ayu and tostring(ayuColors.fg) or "#ff9e64" },
           },
           { "encoding" },
           { "fileformat" },
