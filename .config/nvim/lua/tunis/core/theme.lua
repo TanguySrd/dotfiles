@@ -81,9 +81,15 @@ function M.set(target)
 
   M.apply()
 
-  -- tmux re-sources on the running server (wezterm auto-reloads via file watch)
+  -- tmux re-sources on the running server
   if vim.env.TMUX and vim.env.TMUX ~= "" then
     vim.fn.jobstart({ "tmux", "source-file", vim.fn.expand("~/.tmux.conf") })
+  end
+
+  -- touch wezterm's config so a running instance reloads and re-reads the theme
+  local wezterm_cfg = vim.fn.expand("~/.wezterm.lua")
+  if vim.fn.filereadable(wezterm_cfg) == 1 then
+    vim.fn.jobstart({ "touch", wezterm_cfg })
   end
 
   vim.notify("Theme: " .. target, vim.log.levels.INFO)

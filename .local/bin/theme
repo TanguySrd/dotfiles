@@ -33,8 +33,11 @@ if command -v tmux >/dev/null 2>&1 && tmux ls >/dev/null 2>&1; then
 	tmux source-file "$HOME/.tmux.conf" >/dev/null 2>&1 || true
 fi
 
-# wezterm: auto-reloads via add_to_config_reload_watch_list on the theme file.
-# neovim: applies on next launch (colorscheme/background/lualine read the file at startup).
+# wezterm: touch the config so any running instance reloads and re-reads the theme
+# (wezterm always watches its own config; the external theme file alone is unreliable).
+[ -f "$HOME/.wezterm.lua" ] && touch "$HOME/.wezterm.lua"
+
+# neovim: applies on next launch, or live in a running instance via :Theme.
 
 echo "theme set to $target"
 echo "  wezterm + tmux: applied now   |   neovim: next launch"
