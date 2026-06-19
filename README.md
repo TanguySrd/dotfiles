@@ -133,8 +133,3 @@ Install with Homebrew unless noted:
 - **Window management**: `yabai`, `skhd`
 - **Toolchains**: [SDKMAN](https://sdkman.io/) at `~/.sdkman`
 - **Font**: MesloLGS Nerd Font
-
-## Branches
-
-- `main`: the current setup with both themes.
-- `nvim-config`: a separate snapshot of the Neovim configuration.
