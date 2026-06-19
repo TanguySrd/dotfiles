@@ -6,10 +6,12 @@ if ayu then
     "Shatur/neovim-ayu",
     priority = 1000,
     config = function()
+      local dark = require("tunis.core.theme").is_dark()
       require("ayu").setup({
-        mirage = true,
+        mirage = dark,
         terminal = true,
-        overrides = {
+        -- transparent background only in the dark theme
+        overrides = dark and {
           Normal = { bg = "None" },
           NormalFloat = { bg = "none" },
           ColorColumn = { bg = "None" },
@@ -19,9 +21,9 @@ if ayu then
           CursorLine = { bg = "None" },
           CursorColumn = { bg = "None" },
           VertSplit = { bg = "None" },
-        },
+        } or {},
       })
-      vim.cmd("colorscheme ayu-mirage")
+      vim.cmd("colorscheme " .. (dark and "ayu-mirage" or "ayu-light"))
     end,
   }
 else

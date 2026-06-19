@@ -7,7 +7,7 @@ return {
 
     local ayu = true
     local ayuColors = require("ayu.colors")
-    ayuColors.generate(true)
+    ayuColors.generate(require("tunis.core.theme").is_dark())
 
     local colors = {
       blue = "#65D1FF",
