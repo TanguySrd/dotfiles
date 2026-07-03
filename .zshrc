@@ -30,6 +30,19 @@ source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 export PATH="/opt/homebrew/bin:$PATH"
 
+# Quarkus logs use truecolor escape codes tuned for dark backgrounds, bypassing
+# the terminal palette. Darken them when the light theme is active so they stay
+# readable. Re-evaluated before each prompt so `theme toggle` applies live.
+_quarkus_log_theme() {
+  if [[ "$(cat ~/.config/theme/current 2>/dev/null)" == "light" ]]; then
+    export QUARKUS_LOG_CONSOLE_DARKEN=1
+  else
+    unset QUARKUS_LOG_CONSOLE_DARKEN
+  fi
+}
+autoload -Uz add-zsh-hook
+add-zsh-hook precmd _quarkus_log_theme
+
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"

@@ -54,7 +54,8 @@ local themes = {
 	},
 }
 
-local theme = themes[read_theme()]
+local active_theme = read_theme()
+local theme = themes[active_theme]
 
 config.colors = theme.colors
 if theme.window_background_opacity then
@@ -62,6 +63,17 @@ if theme.window_background_opacity then
 end
 if theme.macos_window_background_blur then
 	config.macos_window_background_blur = theme.macos_window_background_blur
+end
+
+-- Many tools (Quarkus, etc.) emit truecolor escape codes tuned for dark
+-- backgrounds; those bypass the palette above and become unreadable on a
+-- light background. Only nightly wezterm can fix this generically by
+-- enforcing a minimum WCAG contrast ratio; on stable releases, unreadable
+-- tools need per-tool fixes instead (e.g. QUARKUS_LOG_CONSOLE_DARKEN in
+-- .zshrc) -- global foreground_text_hsb darkening is not an option, it
+-- also dims the cursor and tmux status bar.
+if wezterm.version > "20240204" then
+	config.text_min_contrast_ratio = 4.5
 end
 
 config.font = wezterm.font("MesloLGS Nerd Font Mono")
