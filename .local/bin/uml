@@ -1,0 +1,24 @@
+#!/bin/zsh
+# Start uml-viewer (with a Claude companion) for the project in the current directory.
+# Like upstream get-uml-viewer, but uses the shared checkout instead of cloning.
+set -euo pipefail
+V="$HOME/.local/share/unclebob/uml-viewer"
+[[ -d "$V" ]] || { echo "uml-viewer checkout missing at $V" >&2; exit 1; }
+git rev-parse --show-toplevel >/dev/null 2>&1 && [[ "$(git rev-parse --show-toplevel)" == "$PWD" ]] \
+  || { echo "uml: run this from the project's git root" >&2; exit 1; }
+
+if [[ ! -x ./uml ]]; then
+  begin="# BEGIN UML-VIEWER"; end="# END UML-VIEWER"; tmp="$(mktemp)"
+  touch .gitignore
+  awk -v b="$begin" -v e="$end" '$0==b{i=1;next} $0==e{i=0;next} !i{print}' .gitignore > "$tmp"
+  [[ ! -s "$tmp" ]] || printf '\n' >> "$tmp"
+  printf '%s\n' "$begin" ".uml-viewer/" "uml-viewer-log.txt" "/uml" "$end" >> "$tmp"
+  mv "$tmp" .gitignore
+  sed -e "s|^# Loader for this project. Written by get-uml-viewer.|# Loader for this project. Written by ~/.local/bin/uml.|" \
+      -e "s|__DEPS_LINE__|{:deps {uml-viewer/uml-viewer {:local/root \"$V\"} quil/quil {:mvn/version \"4.3.1563\"}}}|" \
+      "$V/scripts/uml" > ./uml
+  chmod +x ./uml
+  echo "Wrote ./uml and the UML-VIEWER block in .gitignore."
+fi
+export GROK_BIN="$HOME/.local/bin/uml-claude-companion"
+exec ./uml "$@"

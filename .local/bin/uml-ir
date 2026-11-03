@@ -1,0 +1,4 @@
+#!/bin/sh
+# Generate uml-viewer IR from a policy, from any project: uml-ir <policy.edn> [out.edn]
+V="$HOME/.local/share/unclebob/uml-viewer"
+exec clojure -Sdeps "{:deps {uml-viewer/uml-viewer {:local/root \"$V\"}}}" -M -m uml-viewer.main.ir-generator "$@"

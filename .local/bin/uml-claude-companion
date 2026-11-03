@@ -1,0 +1,20 @@
+#!/bin/zsh
+# Stand-in for Grok as uml-viewer's companion (uml-viewer launches $GROK_BIN).
+# Translates `grok --yolo --trust --rules RULES PROMPT` into an interactive
+# Claude Code session in normal permission mode (no --yolo equivalent).
+rules="" prompt=""
+while (( $# )); do
+  case "$1" in
+    --yolo|--trust) shift ;;
+    --rules) rules="$2"; shift 2 ;;
+    *) prompt="$1"; shift ;;
+  esac
+done
+extra='
+Local setup notes (Claude Code, not Grok):
+- You are the companion the rules call "Grok".
+- Generate the IR with: uml-ir <policy.edn> <out.edn>  (put both under examples/ in this project; examples/<project-dir-name>.edn is what ./uml --restart reloads).
+- Outside Clojure projects there is no clj -M:crap / clj -M:mutate: use `crapper` and `mutator` (on PATH) from the project root instead; they write the same .metrics/ snapshots.
+- uml-viewer has scanners for Clojure, TypeScript, Rust and Python only (no Java).
+- The viewer restart wrapper is ./uml --restart in this project.'
+exec "$HOME/.local/bin/claude" --append-system-prompt "${rules}${extra}" "$prompt"

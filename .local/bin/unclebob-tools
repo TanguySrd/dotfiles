@@ -1,0 +1,17 @@
+#!/bin/sh
+# Clone, or update, Uncle Bob's quality-gate tools used by the ub-mode skill.
+# The wrappers in ~/.local/bin (crapper, dryer, mutator, uml, uml-ir) run these
+# checkouts. mutator needs crapper next to it, so they share one directory.
+set -eu
+DIR="$HOME/.local/share/unclebob"
+mkdir -p "$DIR"
+for repo in crapper dryer mutator uml-viewer; do
+  if [ -d "$DIR/$repo/.git" ]; then
+    echo "== updating $repo"
+    git -C "$DIR/$repo" pull --ff-only --quiet
+  else
+    echo "== cloning $repo"
+    git clone --quiet "https://github.com/unclebob/$repo.git" "$DIR/$repo"
+  fi
+done
+echo "Done. Python tools build their .venv on first run; uml-viewer needs clojure and Java 21+."

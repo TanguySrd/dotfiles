@@ -13,6 +13,7 @@ My macOS dotfiles, managed as a **bare git repository** with the work tree point
 | Window manager | `.config/yabai/yabairc` | yabai |
 | Hotkeys | `.config/skhd/skhdrc` | skhd |
 | Theme switcher | `.local/bin/theme`, `.config/theme/current` | custom |
+| Coding discipline | `.claude/skills/ub-mode/`, `.local/bin/{unclebob-tools,crapper,dryer,mutator,uml,uml-ir,uml-claude-companion}` | Claude Code + Uncle Bob's tools |
 
 ## How this repo works
 
@@ -123,6 +124,23 @@ Hotkey daemon driving yabai:
 - `shift + alt + 1..7`: send window to a space, `shift + alt + p/n`: previous/next space.
 - `alt + s / g`: focus display north/south.
 
+## ub-mode (Claude Code skill + quality gates)
+
+[ub-mode](https://github.com/unclebob/ub-mode) is a Claude Code skill (`/ub-mode`) that makes the agent work TDD-first, then check its code against deterministic quality gates. The tracked `SKILL.md` is upstream's, with local changes: Conventional Commits, no `Co-Authored-By`, branch + PR instead of pushing to main (and ask first), and a section on where the tools live.
+
+The tools themselves are not vendored. `unclebob-tools` clones (or updates) them into `~/.local/share/unclebob/`, and thin wrappers in `~/.local/bin` run those checkouts:
+
+| Command | What it does |
+|---------|--------------|
+| `crapper` | CRAP score per function (complexity × missing coverage), target `< 10` |
+| `dryer` | Structural duplication candidates, eliminate `>= 0.8` |
+| `mutator` | Mutation testing; run on one file or `--changed` |
+| `uml` | From a project's git root: open uml-viewer with a companion agent in tmux (writes `./uml` and a `UML-VIEWER` block in `.gitignore` on first run) |
+| `uml-ir <policy> <out>` | Regenerate the uml-viewer IR for any project |
+| `uml-claude-companion` | uml-viewer hard-codes Grok as its companion; `uml` points `GROK_BIN` at this shim, which starts Claude Code instead (normal permission mode, no `--yolo`) |
+
+Notes: crapper/dryer/mutator support Clojure, Java, Go, TypeScript, Rust and Python; uml-viewer only scans Clojure, TypeScript, Rust and Python. For Python projects, activate the project's virtualenv first (Homebrew Python refuses the `coverage` install). The wrappers are scripts rather than symlinks because the upstream launchers locate their checkout with `dirname "$0"`.
+
 ## Dependencies
 
 Install with Homebrew unless noted:
@@ -132,4 +150,5 @@ Install with Homebrew unless noted:
 - **Editor**: `neovim` (lazy.nvim bootstraps itself on first launch)
 - **Window management**: `yabai`, `skhd`
 - **Toolchains**: [SDKMAN](https://sdkman.io/) at `~/.sdkman`
+- **ub-mode**: `python3`, `clojure` (for uml-viewer), Java 21+, then run `unclebob-tools`
 - **Font**: MesloLGS Nerd Font
