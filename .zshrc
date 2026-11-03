@@ -43,6 +43,9 @@ _quarkus_log_theme() {
 autoload -Uz add-zsh-hook
 add-zsh-hook precmd _quarkus_log_theme
 
+# Machine-local, untracked settings (client helpers, etc.)
+[[ -r "$HOME/.zshrc.local" ]] && source "$HOME/.zshrc.local"
+
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"

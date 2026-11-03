@@ -83,6 +83,7 @@ The light theme is Ayu Light. The dark theme is Ayu Mirage in Neovim, with match
 - **Aliases**: `ls` runs `eza --icons`, and `config` manages this repo.
 - **PATH**: adds Homebrew and `~/.local/bin` (where the `theme` script lives).
 - **Plugins**: zsh-autosuggestions and zsh-syntax-highlighting from Homebrew. SDKMAN is initialised at the end of the file (required by SDKMAN).
+- **Local overrides**: `~/.zshrc.local` is sourced when present (just before SDKMAN). It is not tracked, so machine-specific or client-specific helpers go there instead of this public repo.
 
 ## WezTerm (`.wezterm.lua`)
 
